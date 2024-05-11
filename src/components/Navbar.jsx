@@ -36,7 +36,7 @@ const handleLogOut = () => {
                            {links}
                         </ul>
                     </div>
-                    <a className="btn btn-ghost text-xl">Modern Hotel Booking</a>
+                    <Link to='/' className="btn btn-ghost text-xl hidden lg:block">Modern Hotel Booking</Link>
                 </div>
                 <div className="navbar-center hidden lg:flex">
                     <ul className="menu menu-horizontal px-1">

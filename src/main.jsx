@@ -12,12 +12,13 @@ import Home from './pages/Home.jsx';
 import Register from './pages/authentication/Register.jsx';
 import Login from './pages/authentication/Login.jsx';
 import AuthProvider from './provider/AuthProvider.jsx';
+import ErrorPage from './pages/ErrorPage.jsx';
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Root></Root>,
-    errorElement: <h1>404 Page not found</h1>,
+    errorElement: <ErrorPage></ErrorPage>,
     children:[
       {
         path:'/',

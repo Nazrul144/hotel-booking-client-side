@@ -1,9 +1,14 @@
-import React from 'react';
+import Banner from "./Home/Banner";
+import MapLocation from "./Home/MapLocation";
+import NewsletterSignup from "./Home/NewsletterSignup";
+
 
 const Home = () => {
     return (
         <div>
-            <h1 className='font-bold text-6xl text-center mt-56 font-naz '>This is home page</h1>
+            <Banner></Banner>
+            <MapLocation></MapLocation>
+            <NewsletterSignup></NewsletterSignup>
         </div>
     );
 };
