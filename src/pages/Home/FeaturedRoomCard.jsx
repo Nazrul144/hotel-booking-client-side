@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types'; // ES6
 import { Helmet } from 'react-helmet-async';
 
 const FeaturedRoomCard = ({featuredRoom}) => {
@@ -22,6 +23,10 @@ const FeaturedRoomCard = ({featuredRoom}) => {
             </div>
         </div>
     );
+};
+
+FeaturedRoomCard.propTypes = {
+    featuredRoom:PropTypes.node
 };
 
 export default FeaturedRoomCard;
