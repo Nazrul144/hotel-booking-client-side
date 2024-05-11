@@ -7,6 +7,7 @@ import { AuthContext } from '../../provider/AuthProvider';
 import toast, { Toaster } from 'react-hot-toast';
 import { createUserWithEmailAndPassword, getAuth, updateProfile } from 'firebase/auth';
 import app from '../../provider/firebaseProvider/firebase.config';
+import { Helmet } from 'react-helmet-async';
 const Register = () => {
     const {createUser} = useContext(AuthContext)
     const [showPassword, setShowPassword] = useState(false);
@@ -63,7 +64,9 @@ const Register = () => {
 
     return (
         <div>
-            <h1>This is register page</h1>
+            <Helmet>
+                <title>Hotel-Booking | Register</title>
+            </Helmet>
             <div className="w-full max-w-md p-8 space-y-3 rounded-xl dark:bg-gray-50 dark:text-gray-800 mt-44 lg:mt-8 mx-auto shadow-xl">
                 <h1 className="text-2xl font-bold text-center">Register Now!</h1>
 

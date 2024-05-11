@@ -8,6 +8,7 @@ import {useLocation, useNavigate} from 'react-router-dom'
 import toast, { Toaster } from 'react-hot-toast';
 import { GoogleAuthProvider, getAuth, signInWithPopup } from 'firebase/auth';
 import app from '../../provider/firebaseProvider/firebase.config';
+import { Helmet } from 'react-helmet-async';
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -49,7 +50,9 @@ const Login = () => {
     }
     return (
         <div>
-            <h1>This is login page</h1>
+             <Helmet>
+                <title>Modern-Hotel | Login</title>
+            </Helmet>
             <div className="w-full max-w-md p-8 space-y-3 rounded-xl dark:bg-gray-50 dark:text-gray-800 mt-44 lg:mt-8 mx-auto shadow-xl">
                 <h1 className="text-2xl font-bold text-center">Login</h1>
 

@@ -8,9 +8,10 @@ const Navbar = () => {
     const [showName, setShowName] = useState(false);
 
     const links = <>
-        <li><NavLink to='/' className={({isActive})=> isActive? 'border-[1px] border-pink-400 rounded-lg' : ""}>Home</NavLink></li>
-        <li><NavLink to='/register' className={({isActive})=> isActive? 'border-[1px] border-pink-400 rounded-lg' : ""}>Register</NavLink></li>
-        <li><NavLink to='/login' className={({isActive})=> isActive? 'border-[1px] border-pink-400 rounded-lg' : ""}>Login</NavLink></li>
+        <li className='font-manrope'><NavLink to='/' className={({isActive})=> isActive? 'border-[1px] border-pink-400 rounded-lg' : ""}>Home</NavLink></li>
+        <li className='font-manrope'><NavLink to='/register' className={({isActive})=> isActive? 'border-[1px] border-pink-400 rounded-lg' : ""}>Register</NavLink></li>
+        <li className='font-manrope'><NavLink to='/rooms' className={({isActive})=> isActive? 'border-[1px] border-pink-400 rounded-lg' : ""}>Rooms</NavLink></li>
+        <li className='font-manrope'><NavLink to='/myBooking' className={({isActive})=> isActive? 'border-[1px] border-pink-400 rounded-lg' : ""}>My Bookings</NavLink></li>
     </>
 
 const handleLogOut = () => {

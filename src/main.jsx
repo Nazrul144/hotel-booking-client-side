@@ -1,8 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
 import './index.css'
-
+import {  HelmetProvider } from 'react-helmet-async';
 import {
   createBrowserRouter,
   RouterProvider,
@@ -13,6 +12,8 @@ import Register from './pages/authentication/Register.jsx';
 import Login from './pages/authentication/Login.jsx';
 import AuthProvider from './provider/AuthProvider.jsx';
 import ErrorPage from './pages/ErrorPage.jsx';
+import MyBooking from './pages/MyBooking.jsx';
+import Rooms from './pages/Rooms.jsx';
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,14 @@ const router = createBrowserRouter([
       {
         path:'/login',
         element: <Login></Login>
+      },
+      {
+        path:'/myBooking',
+        element: <MyBooking></MyBooking>
+      },
+      {
+        path:'/rooms',
+        element: <Rooms></Rooms>
       }
     ]
   },
@@ -39,7 +48,9 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <AuthProvider>
-    <RouterProvider router={router} />
+    <HelmetProvider>
+      <RouterProvider router={router} />
+    </HelmetProvider>
     </AuthProvider>
   </React.StrictMode>,
 )
