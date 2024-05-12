@@ -15,6 +15,9 @@ import ErrorPage from './pages/ErrorPage.jsx';
 import MyBooking from './pages/MyBooking.jsx';
 import Rooms from './pages/Rooms.jsx';
 import RoomDetails from './pages/RoomDetails.jsx';
+// import PrivateRoute from './components/PrivateRoute/PrivateRoute.jsx'
+import PrivateRoute from './pages/PrivateRoute/PrivateRoute.jsx'
+
 
 const router = createBrowserRouter([
   {
@@ -36,7 +39,7 @@ const router = createBrowserRouter([
       },
       {
         path:'/myBooking',
-        element: <MyBooking></MyBooking>
+        element: <PrivateRoute><MyBooking></MyBooking></PrivateRoute>
       },
       {
         path:'/rooms',

@@ -8,24 +8,24 @@ const Navbar = () => {
     const [showName, setShowName] = useState(false);
 
     const links = <>
-        <li className='font-manrope'><NavLink to='/' className={({isActive})=> isActive? 'border-[1px] border-pink-400 rounded-lg' : ""}>Home</NavLink></li>
-        <li className='font-manrope'><NavLink to='/register' className={({isActive})=> isActive? 'border-[1px] border-pink-400 rounded-lg' : ""}>Register</NavLink></li>
-        <li className='font-manrope'><NavLink to='/rooms' className={({isActive})=> isActive? 'border-[1px] border-pink-400 rounded-lg' : ""}>Rooms</NavLink></li>
-        <li className='font-manrope'><NavLink to='/myBooking' className={({isActive})=> isActive? 'border-[1px] border-pink-400 rounded-lg' : ""}>My Bookings</NavLink></li>
+        <li className='font-manrope'><NavLink to='/' className={({ isActive }) => isActive ? 'border-[1px] border-pink-400 rounded-lg' : ""}>Home</NavLink></li>
+        <li className='font-manrope'><NavLink to='/register' className={({ isActive }) => isActive ? 'border-[1px] border-pink-400 rounded-lg' : ""}>Register</NavLink></li>
+        <li className='font-manrope'><NavLink to='/rooms' className={({ isActive }) => isActive ? 'border-[1px] border-pink-400 rounded-lg' : ""}>Rooms</NavLink></li>
+        <li className='font-manrope'><NavLink to='/myBooking' className={({ isActive }) => isActive ? 'border-[1px] border-pink-400 rounded-lg' : ""}>My Bookings</NavLink></li>
     </>
 
-const handleLogOut = () => {
-    logOut()
-        .then(result => {
-            toast.success('logged out successfully!')
-        })
-        .catch(error => {
-            console.log(error)
-        })
-}
+    const handleLogOut = () => {
+        logOut()
+            .then(result => {
+                toast.success('logged out successfully!')
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
 
     return (
-        
+
         <div>
             <div className="navbar bg-base-100 z-100 bg-gradient-to-r from-indigo-200 cyan-500 via-purple-200 to-pink-200">
                 <div className="navbar-start">
@@ -34,7 +34,7 @@ const handleLogOut = () => {
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
                         </div>
                         <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-                           {links}
+                            {links}
                         </ul>
                     </div>
                     <Link to='/' className="btn btn-ghost text-xl hidden lg:block">Modern Hotel Booking</Link>
@@ -65,7 +65,8 @@ const handleLogOut = () => {
 
                 </div>
             </div>
-            <Toaster />
+            <Toaster position="top-right"
+                reverseOrder={false} />
         </div>
     );
 };
