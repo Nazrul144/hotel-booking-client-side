@@ -118,7 +118,8 @@ const Login = () => {
                     <Link to='/register' rel="noopener noreferrer" href="#" className="underline dark:text-gray-800 font-bold text-blue-600">Login</Link>
                 </p>
             </div>
-            <Toaster />
+            <Toaster position="top-right"
+                reverseOrder={false} />
         </div>
     );
 };
