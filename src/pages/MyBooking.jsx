@@ -2,149 +2,194 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { AuthContext } from '../provider/AuthProvider';
 import axios from 'axios';
-const MyBooking = () => {
-  const {user} = useContext(AuthContext)
-  const [bookData, setBookData] = useState([])
+import { MdModeEditOutline } from "react-icons/md";
+import { MdCancel } from "react-icons/md";
+import { MdFeedback } from "react-icons/md";
+import Swal from 'sweetalert2'
 
-  useEffect(()=>{
-      getBookData()
-  },[user])
-  
-  const getBookData = async () =>{
-    const {data} = await axios(`${import.meta.env.VITE_API_URL}/bookData/${user?.email}`)
+const MyBooking = () => {
+  const { user } = useContext(AuthContext)
+  const [bookData, setBookData] = useState([])
+  console.log(bookData);
+  useEffect(() => {
+    getBookData()
+  }, [user])
+
+  const getBookData = async () => {
+    const { data } = await axios(`${import.meta.env.VITE_API_URL}/bookData/${user?.email}`)
     setBookData(data)
   }
-  console.log(bookData);
-    return (
-        <div>
-             <Helmet>
-                <title>Modern-Hotel | MyBooking</title>
-            </Helmet>
-            <h1>This is my booking page section</h1>
-            <div className='myBooking'>
-            <section className='container px-4 mx-auto pt-12'>
-      <div className='flex items-center gap-x-3'>
-        <h2 className='text-lg font-medium text-gray-800 '>My Booking Status:</h2>
 
-        <span className='px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full '>
-          {bookData.length} Booked
-        </span>
-      </div>
+  //Handling feedback:
+  const handleFeedback = () => {
+    Swal.fire({
+      title: "Share your feedback",
+      html: `
+        <form id="feedbackForm" class="flex flex-col gap-4">
+          <label for="username" class="mb-1">Username:</label>
+          <input type="text" id="username" name="username" class="border border-gray-300 rounded-md p-2 h-10">
+    
+          <label for="rating" class="mb-1">Rating:</label>
+          <select id="rating" name="rating" class="border border-gray-300 rounded-md p-2 h-10">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+    
+          <label for="comment" class="mb-1">Comment:</label>
+          <textarea id="comment" name="comment" class="border border-gray-300 rounded-md p-2 h-20"></textarea>
+    
+          <label for="timestamp" class="mb-1">Timestamp:</label>
+          <input type="text" id="timestamp" name="timestamp" class="border border-gray-300 rounded-md p-2 h-10" value="${new Date().toLocaleString()}">
+        </form>
+      `,
+      showCancelButton: true,
+      confirmButtonText: "Submit",
+      cancelButtonText: "Cancel",
+      focusConfirm: false,
 
-      <div className='flex flex-col mt-6'>
-        <div className='-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8'>
-          <div className='inline-block min-w-full py-2 align-middle md:px-6 lg:px-8'>
-            <div className='overflow-hidden border border-gray-200  md:rounded-lg'>
-              <table className='min-w-full divide-y divide-gray-200'>
-                <thead className='bg-gray-50'>
-                  <tr>
-                    <th
-                      scope='col'
-                      className='py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500'
-                    >
-                      <div className='flex items-center gap-x-3'>
-                        <span>Room Name</span>
-                      </div>
-                    </th>
+      preConfirm: async () => {
+        // Handle form submission here
+        const formData = new FormData(document.getElementById('feedbackForm'));
+        const username = formData.get('username');
+        const rating = formData.get('rating');
+        const comment = formData.get('comment');
+        const timestamp = formData.get('timestamp');
+        const bookId = bookData[0]._id;
 
-                    <th
-                      scope='col'
-                      className='px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500'
-                    >
-                      <span>Date of booking</span>
-                    </th>
+        const UserReviews = {
+          username, rating, comment, timestamp, bookId
+        };
 
-                    <th
-                      scope='col'
-                      className='px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500'
-                    >
-                      <button className='flex items-center gap-x-2'>
-                        <span>Provide feedback</span>
-                      </button>
-                    </th>
+        try {
+          const response = await axios.post(`${import.meta.env.VITE_API_URL}/reviews`, UserReviews);
+          console.log(response.data);
+        } catch (error) {
+          console.error("Error:", error);
+        }
 
-                    <th
-                      scope='col'
-                      className='px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500'
-                    >
-                      Category
-                    </th>
+        console.log(UserReviews);
+        // You can perform further validation and submit the form data as required
+        console.log("Form submitted:", {
+          username,
+          rating,
+          comment,
+          timestamp
+        });
+      }
 
-                    <th
-                      scope='col'
-                      className='px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500'
-                    >
-                      Update Date
-                    </th>
+    });
 
-                    <th className='px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500'>
-                      Booking Cancel
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className='bg-white divide-y divide-gray-200 '>
-                 {
-                  bookData.map(singleBookData =>  <tr key={singleBookData._id}>
-                    <td className='px-4 py-4 text-sm text-gray-500  whitespace-nowrap'>
-                      Build Dynamic Website
-                    </td>
 
-                    <td className='px-4 py-4 text-sm text-gray-500  whitespace-nowrap'>
-                      10/04/2024
-                    </td>
+  }
 
-                    <td className='px-4 py-4 text-sm text-gray-500  whitespace-nowrap'>
-                      $200
-                    </td>
-                    <td className='px-4 py-4 text-sm whitespace-nowrap'>
-                      <div className='flex items-center gap-x-2'>
-                        <p
-                          className='px-3 py-1 rounded-full text-blue-500 bg-blue-100/60
-                           text-xs'
+
+
+  return (
+    <div>
+      <Helmet>
+        <title>Modern-Hotel | MyBooking</title>
+      </Helmet>
+      <h1>This is my booking page section</h1>
+      <div className='myBooking'>
+        <section className='container px-4 mx-auto pt-12'>
+          <div className='flex items-center gap-x-3'>
+            <h2 className='text-lg font-medium text-gray-800 '>My Booking Status:</h2>
+
+            <span className='px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full '>
+              {bookData.length} Booked
+            </span>
+          </div>
+
+          <div className='flex flex-col mt-6'>
+            <div className='-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8'>
+              <div className='inline-block min-w-full py-2 align-middle md:px-6 lg:px-8'>
+                <div className='overflow-hidden border border-gray-200  md:rounded-lg'>
+                  <table className='min-w-full divide-y divide-gray-200'>
+                    <thead className='bg-green-200'>
+                      <tr>
+                        <th
+                          scope='col'
+                          className='py-3.5 px-4 text-sm text-left rtl:text-right text-gray-500 font-manrope font-bold'
                         >
-                          Web Development
-                        </p>
-                      </div>
-                    </td>
-                    <td className='px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap'>
-                      {/* <div className='inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-yellow-100/60 text-yellow-500'>
-                        <span className='h-1.5 w-1.5 rounded-full bg-yellow-500'></span>
-                        <h2 className='text-sm font-normal '>Pending</h2>
-                      </div> */}
-                    </td>
-                    <td className='px-4 py-4 text-sm whitespace-nowrap'>
-                      <button
-                        title='Mark Complete'
-                        className='text-gray-500 transition-colors duration-200   hover:text-red-500 focus:outline-none disabled:cursor-not-allowed'
-                      >
-                        <svg
-                          xmlns='http://www.w3.org/2000/svg'
-                          fill='none'
-                          viewBox='0 0 24 24'
-                          strokeWidth='1.5'
-                          stroke='currentColor'
-                          className='w-5 h-5'
+                          <div className='flex items-center gap-x-3'>
+                            <span>Room Name</span>
+                          </div>
+                        </th>
+
+                        <th
+                          scope='col'
+                          className='px-4 py-3.5 text-sm text-left rtl:text-right text-gray-500 font-manrope font-bold'
                         >
-                          <path
-                            strokeLinecap='round'
-                            strokeLinejoin='round'
-                            d='M11.35 3.836c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m8.9-4.414c.376.023.75.05 1.124.08 1.131.094 1.976 1.057 1.976 2.192V16.5A2.25 2.25 0 0 1 18 18.75h-2.25m-7.5-10.5H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V18.75m-7.5-10.5h6.375c.621 0 1.125.504 1.125 1.125v9.375m-8.25-3 1.5 1.5 3-3.75'
-                          />
-                        </svg>
-                      </button>
-                    </td>
-                  </tr>)
-                 }
-                </tbody>
-              </table>
+                          <span>Date of booking</span>
+                        </th>
+
+                        <th
+                          scope='col'
+                          className='px-4 py-3.5 text-sm text-left rtl:text-right text-gray-500 font-manrope font-bold'
+                        >
+                          <button className='flex items-center gap-x-2'>
+                            <span>Provide feedback</span>
+                          </button>
+                        </th>
+
+                        <th
+                          scope='col'
+                          className='px-4 py-3.5 text-s text-left rtl:text-right text-gray-500 font-manrope font-bold'
+                        >
+                          Update Date
+                        </th>
+
+                        <th className='px-4 py-3.5 text-sm text-left rtl:text-right text-gray-500 font-manrope font-bold'>
+                          Booking Cancel
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className='bg-white divide-y divide-gray-200 '>
+                      {
+                        bookData.map(singleBookData => <tr key={singleBookData._id}>
+                          <td className='px-4 py-4 text-sm text-gray-500  whitespace-nowrap'>
+                            {singleBookData.title}
+                          </td>
+
+                          <td className='px-4 py-4 text-sm text-gray-500  whitespace-nowrap'>
+                            {new Date(singleBookData.date).toLocaleDateString()}
+                          </td>
+
+                          <td className='px-4 py-4 text-sm text-gray-500  whitespace-nowrap'>
+                            User Feedback:
+                            <button onClick={handleFeedback}><MdFeedback className='font-extrabold text-xl ml-12' /></button>
+                          </td>
+                          <td className='px-4 py-4 text-sm whitespace-nowrap'>
+                            <div className='flex items-center gap-x-2'>
+                              <div className='inline-flex items-center px-3 py-1 rounded-full gap-x-2'>
+                                <button><MdModeEditOutline className='font-extrabold text-xl ml-4' /></button>
+                              </div>
+                            </div>
+                          </td>
+                          <td className='px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap'>
+                            <button
+                              title='Mark Complete'
+                              className='text-gray-500 transition-colors duration-200   hover:text-red-500 focus:outline-none disabled:cursor-not-allowed'
+                            >
+                              <MdCancel className='font-extrabold text-2xl ml-12' />
+                            </button>
+                          </td>
+
+                        </tr>)
+                      }
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        </section>
       </div>
-    </section>
-            </div>
-        </div>
-    );
+    </div>
+  );
 };
 
 export default MyBooking;

@@ -6,6 +6,7 @@ const Rooms = () => {
     const [rooms, setRooms] = useState([])
     const [filter, setFilter] =  useState('')
     
+    
     useEffect(() => {
         fetch(`${import.meta.env.VITE_API_URL}/rooms?filter=${filter}`)
         .then(res => res.json())
@@ -14,7 +15,7 @@ const Rooms = () => {
         });
     }, [filter]);
 
-    console.log(filter);
+   
     return (
         <div>
              <Helmet>
