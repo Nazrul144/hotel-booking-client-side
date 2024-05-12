@@ -14,6 +14,7 @@ import AuthProvider from './provider/AuthProvider.jsx';
 import ErrorPage from './pages/ErrorPage.jsx';
 import MyBooking from './pages/MyBooking.jsx';
 import Rooms from './pages/Rooms.jsx';
+import RoomDetails from './pages/RoomDetails.jsx';
 
 const router = createBrowserRouter([
   {
@@ -40,6 +41,11 @@ const router = createBrowserRouter([
       {
         path:'/rooms',
         element: <Rooms></Rooms>
+      },
+      {
+        path:'/room/:id',
+        element: <RoomDetails></RoomDetails>,
+        loader: ({params})=> fetch(`${import.meta.env.VITE_API_URL}/room/${params.id}`)
       }
     ]
   },
