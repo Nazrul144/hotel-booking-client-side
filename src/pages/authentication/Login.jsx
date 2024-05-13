@@ -95,7 +95,7 @@ const Login = () => {
 
                     </div>
 
-                    <button className="block w-full p-3 text-center dark:text-gray-50 dark:bg-violet-600 font-bold rounded-lg bg-[tomato]">Login</button>
+                    <button className="block w-full p-3 text-center dark:text-gray-50 dark:bg-violet-600 font-bold rounded-lg bg-[#22C1C3]">Login</button>
                 </form>
                 <div className="errorDiv">
                  

@@ -67,7 +67,7 @@ const Register = () => {
             <Helmet>
                 <title>Hotel-Booking | Register</title>
             </Helmet>
-            <div className="w-full max-w-md p-8 space-y-3 rounded-xl dark:bg-gray-50 dark:text-gray-800 mt-44 lg:mt-8 mx-auto shadow-xl">
+            <div className="w-full max-w-md p-8 space-y-3 rounded-xl bg-[#FFFFFF33] dark:text-gray-800 mt-44 lg:mt-8 mx-auto shadow-xl">
                 <h1 className="text-2xl font-bold text-center">Register Now!</h1>
 
 
@@ -122,7 +122,7 @@ const Register = () => {
 
                     </div>
 
-                    <button className="block w-full p-3 text-center dark:text-gray-50 dark:bg-violet-600 font-bold rounded-lg bg-[tomato]">Register</button>
+                    <button className="block w-full p-3 text-center dark:text-gray-50 dark:bg-violet-600 font-bold rounded-lg bg-[#22C1C3]">Register</button>
                 </form>
                 <div className="errorDiv">
                  

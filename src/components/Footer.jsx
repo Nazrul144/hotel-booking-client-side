@@ -23,7 +23,7 @@ const Footer = () => {
                     </div>
                 </nav>
                 <aside>
-                    <p>Copyright © 2024 - All right reserved by  ElysianStays Ltd</p>
+                    <p>Copyright © 2024 - All right reserved by  <span className="text-red-400 font-medium">ElysianStays</span> Ltd</p>
                 </aside>
             </footer>
         </div>
