@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types'; // ES6
 import { Link } from 'react-router-dom';
+import 'animate.css';
 const RoomCard = ({ room }) => {
     const { image, pricePerNight, title, specialOffers, _id } = room || {};
 
@@ -20,7 +21,8 @@ const RoomCard = ({ room }) => {
 
     return (
         <div>
-            <Link to={`/room/${_id}`} className=" dark:bg-gray-50 dark:text-gray-800 relative">
+           <div className=' animate__animated animate__zoomInRightbg-sky-500 duration-1000 ease-in-out hover:bg-violet-200 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300 p-4 rounded-xl animate__zoomIn'>
+           <Link to={`/room/${_id}`} className=" dark:bg-gray-50 dark:text-gray-800 relative ">
                 {/* Image Container */}
                 <div className="relative">
                     <img src={image} alt="room_image" className="block object-cover object-center w-full rounded-md h-72 dark:bg-gray-500" />
@@ -40,7 +42,7 @@ const RoomCard = ({ room }) => {
                     </li>
                 </div>
             </Link>
-
+           </div>
         </div>
     );
 };

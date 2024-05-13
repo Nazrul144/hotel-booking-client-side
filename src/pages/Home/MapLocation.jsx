@@ -1,10 +1,26 @@
+import React from "react";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import "leaflet/dist/leaflet.css"; 
 
 const MapLocation = () => {
-    return (
-        <div className="mt-16">
-            <h1 className='text-center font-bold text-4xl'>This is map section</h1>
-        </div>
-    );
+  return (
+    <div className="mt-16 h-[720px]">
+      <MapContainer
+        center={[51.505, -0.09]}
+        zoom={13}
+        scrollWheelZoom={true} 
+        className="w-full h-full" 
+      >
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        <Marker position={[51.505, -0.09]}>
+          <Popup>A pretty CSS3 popup. <br /> Easily customizable.</Popup>
+        </Marker>
+      </MapContainer>
+    </div>
+  );
 };
 
 export default MapLocation;

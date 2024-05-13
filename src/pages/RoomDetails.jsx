@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from 'axios';
-
+import {Navigate} from 'react-router-dom'
 import { Link, useLoaderData } from "react-router-dom";
 import { AuthContext } from "../provider/AuthProvider";
 import Swal from 'sweetalert2'
@@ -41,30 +41,34 @@ const RoomDetails = () => {
     }
 
     try {
-      Swal.fire({
-        title: "Are you sure?",
-        html: `<b>The price for ${title} is $${pricePerNight} per night.</b> Booking Date: <b>${new Date(date).toLocaleDateString()}</b>.`,
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Confirm Booking!"
-      }).then((result) => {
-        if (result.isConfirmed) {
-          const data = axios.post(`${import.meta.env.VITE_API_URL}/bookData`, bookData)
-          console.log(data);
-          if (data) {
-            Swal.fire({
-
-              title: "Confirm !",
-
-              text: "You have booked the room!.",
-              icon: "success"
-            });
-            location.reload()
+      if(user){
+        
+        Swal.fire({
+          title: "Are you sure?",
+          html: `<b>The price for ${title} is $${pricePerNight} per night.</b> Booking Date: <b>${new Date(date).toLocaleDateString()}</b>.`,
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Confirm Booking!"
+        }).then((result) => {
+          if (result.isConfirmed) {
+            const data = axios.post(`${import.meta.env.VITE_API_URL}/bookData`, bookData)
+            console.log(data);
+            if (data) {
+              Swal.fire({
+  
+                title: "Confirm !",
+  
+                text: "You have booked the room!.",
+                icon: "success"
+              });
+              location.reload()
+            }
           }
-        }
-      });
+        });
+      }
+      
 
     } catch (error) {
       console.log(error);

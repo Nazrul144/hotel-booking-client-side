@@ -20,14 +20,16 @@ const MyBooking = () => {
     setBookData(data)
   }
 
+  console.log(user?.username || 'Rakib');
   //Handling feedback:
   const handleFeedback = () => {
+   
     Swal.fire({
       title: "Share your feedback",
       html: `
         <form id="feedbackForm" class="flex flex-col gap-4">
           <label for="username" class="mb-1">Username:</label>
-          <input type="text" id="username" name="username" class="border border-gray-300 rounded-md p-2 h-10">
+          <input type="text" id="username" defaultValue={user?.username || 'Your name'} placeholder="Enter your name" name="username" class="border border-gray-300 rounded-md p-2 h-10">
     
           <label for="rating" class="mb-1">Rating:</label>
           <select id="rating" name="rating" class="border border-gray-300 rounded-md p-2 h-10">
@@ -58,7 +60,7 @@ const MyBooking = () => {
         const comment = formData.get('comment');
         const timestamp = formData.get('timestamp');
         const bookId = bookData[0]._id;
-
+    
         const UserReviews = {
           username, rating, comment, timestamp, bookId
         };
