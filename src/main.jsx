@@ -17,6 +17,8 @@ import Rooms from './pages/Rooms.jsx';
 import RoomDetails from './pages/RoomDetails.jsx';
 // import PrivateRoute from './components/PrivateRoute/PrivateRoute.jsx'
 import PrivateRoute from './pages/PrivateRoute/PrivateRoute.jsx'
+import Contact from './pages/Contact.jsx';
+import About from './pages/About.jsx';
 
 
 const router = createBrowserRouter([
@@ -49,6 +51,14 @@ const router = createBrowserRouter([
         path:'/room/:id',
         element: <RoomDetails></RoomDetails>,
         loader: ({params})=> fetch(`${import.meta.env.VITE_API_URL}/room/${params.id}`)
+      },
+      {
+        path:'/aboutus',
+        element: <About></About>
+      },
+      {
+        path:'/contact',
+        element: <Contact></Contact>
       }
     ]
   },
