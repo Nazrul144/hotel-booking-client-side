@@ -1,8 +1,28 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Holiday Hive
 
-Currently, two official plugins are available:
+"Holiday Hive" is your go-to platform for all your holiday planning needs. Discover, plan, and book your dream getaways effortlessly with our user-friendly interface. From luxurious resorts to cozy cottages, we offer a wide range of accommodation options to suit every traveler's preferences. Join our hive today and embark on unforgettable journeys with ease. Welcome to "Holiday Hive" – where your holiday dreams come alive.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# features
+- firebase
+- prop-types
+- sweetAleart/modal
+- React icon
+- React-simple-typewriter
+- React Awesome reveal
+- react hot toast
+- react animation
+- swiper-slider
+- axios
+
+
+
+# Implement of three packages:
+- Helmet
+- Map Library (leaflet)
+
+
+# Website name: Holiday Hive
+# live link: 
+
+

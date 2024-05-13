@@ -20,16 +20,14 @@ const MyBooking = () => {
     setBookData(data)
   }
 
-  console.log(user?.username || 'Rakib');
   //Handling feedback:
-  const handleFeedback = () => {
-   
+  const handleFeedback = (id) => {
     Swal.fire({
       title: "Share your feedback",
       html: `
         <form id="feedbackForm" class="flex flex-col gap-4">
           <label for="username" class="mb-1">Username:</label>
-          <input type="text" id="username" defaultValue={user?.username || 'Your name'} placeholder="Enter your name" name="username" class="border border-gray-300 rounded-md p-2 h-10">
+          <input type="text" id="username" value="${user?.displayName || 'Your name'}" name="username" class="border border-gray-300 rounded-md p-2 h-10">
     
           <label for="rating" class="mb-1">Rating:</label>
           <select id="rating" name="rating" class="border border-gray-300 rounded-md p-2 h-10">
@@ -59,8 +57,8 @@ const MyBooking = () => {
         const rating = formData.get('rating');
         const comment = formData.get('comment');
         const timestamp = formData.get('timestamp');
-        const bookId = bookData[0]._id;
-    
+        const bookId = id
+
         const UserReviews = {
           username, rating, comment, timestamp, bookId
         };
@@ -86,7 +84,64 @@ const MyBooking = () => {
 
 
   }
+console.log(bookData);
+  //Handle myBooking:
+  const handleDelete = async (id) => {
 
+    Swal.fire({
+      title: "Do you want to cancel the booking?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`http://localhost:5000/bookData/${id}`, {
+          method: "DELETE"
+        })
+          .then(res => res.json())
+          .then(data => {
+            console.log(data);
+            if (data.deleteCount > 0) {
+              const remaining = bookData.filter(booking => booking._id !== id)
+              setBookData(remaining)
+            }
+          })
+        Swal.fire({
+          text: "Your booking has been canceled!.",
+          icon: "success"
+        });
+        location.reload()
+      }
+    });
+
+
+  } //end block
+
+  //Handle update:
+  const handleUpdate = (id) => {
+    console.log(id);
+    fetch(`http://localhost:5000/bookData/${id}`, {
+      method: "PATCH",
+      headers: {
+        "content-type": "application/json"
+      },
+      body: JSON.stringify({ status: "confirm" })
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        if (data.modifiedCount > 0) {
+          //Update......
+          // const remaining = bookData.filter( date => date._id !== id);
+          // const updated = bookData.find(data => data._id === id);
+          // updated.status = 'confirm'
+          // const newDate = [updated, ...remaining];
+          // setBookData(newDate)
+        }
+      })
+  }
 
 
   return (
@@ -94,7 +149,6 @@ const MyBooking = () => {
       <Helmet>
         <title>Modern-Hotel | MyBooking</title>
       </Helmet>
-      <h1>This is my booking page section</h1>
       <div className='myBooking'>
         <section className='container px-4 mx-auto pt-12'>
           <div className='flex items-center gap-x-3'>
@@ -162,17 +216,17 @@ const MyBooking = () => {
 
                           <td className='px-4 py-4 text-sm text-gray-500  whitespace-nowrap'>
                             User Feedback:
-                            <button onClick={handleFeedback}><MdFeedback className='font-extrabold text-xl ml-12' /></button>
+                            <button onClick={()=> handleFeedback(singleBookData.roomId)}><MdFeedback className='font-extrabold text-xl ml-12' /></button>
                           </td>
                           <td className='px-4 py-4 text-sm whitespace-nowrap'>
                             <div className='flex items-center gap-x-2'>
                               <div className='inline-flex items-center px-3 py-1 rounded-full gap-x-2'>
-                                <button><MdModeEditOutline className='font-extrabold text-xl ml-4' /></button>
+                                <button onClick={() => handleUpdate(singleBookData._id)}><MdModeEditOutline className='font-extrabold text-xl ml-4' /></button>
                               </div>
                             </div>
                           </td>
                           <td className='px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap'>
-                            <button
+                            <button onClick={() => handleDelete(singleBookData._id)}
                               title='Mark Complete'
                               className='text-gray-500 transition-colors duration-200   hover:text-red-500 focus:outline-none disabled:cursor-not-allowed'
                             >

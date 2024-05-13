@@ -9,6 +9,7 @@ import image4 from '../../assets/banner/image4.jpg'
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import Marquee from "react-fast-marquee";
 
 // import required modules
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
@@ -17,42 +18,49 @@ import Slide from './Slide';
 export default function Banner() {
   return (
     <>
-     <div className='container px-6 py-10 mx-auto'>
-     <Swiper
-        spaceBetween={30}
-        centeredSlides={true}
-        autoplay={{
-          delay: 2500,
-          disableOnInteraction: false,
-        }}
-        pagination={{
-          clickable: true,
-        }}
-        navigation={true}
-        modules={[Autoplay, Pagination, Navigation]}
-        className="mySwiper"
-        
-      >
-        <SwiperSlide >
+
+      <div>
+        <Marquee className='text-4xl text-blue-400 font-bold' pauseOnHover={true} gradientColor={string}>
+          Welcome to Holiday Hive World. We are super excited to congratulate you!
+        </Marquee>
+      </div>
+
+      <div className='container px-6 py-10 mx-auto'>
+        <Swiper
+          spaceBetween={30}
+          centeredSlides={true}
+          autoplay={{
+            delay: 2500,
+            disableOnInteraction: false,
+          }}
+          pagination={{
+            clickable: true,
+          }}
+          navigation={true}
+          modules={[Autoplay, Pagination, Navigation]}
+          className="mySwiper"
+
+        >
+          <SwiperSlide >
             <Slide image={image1} text='Royal hotel for the people!' className='rounded-lg'></Slide>
-        </SwiperSlide>
+          </SwiperSlide>
 
 
-        <SwiperSlide>
-            <Slide image={image2} text= ' Explore this hotel and enjoy your life!' className='rounded-lg'></Slide>
-        </SwiperSlide>
-        
+          <SwiperSlide>
+            <Slide image={image2} text=' Explore this hotel and enjoy your life!' className='rounded-lg'></Slide>
+          </SwiperSlide>
 
-        <SwiperSlide>
-            <Slide image={image3} text= 'Look like a king place, Explore!' className='rounded-lg'></Slide>
-        </SwiperSlide>
 
-        <SwiperSlide>
-            <Slide image={image4} text= ' Very beautiful hotel and eco-friendly!' className='rounded-lg'></Slide>
-        </SwiperSlide>
-       
-      </Swiper>
-     </div>
+          <SwiperSlide>
+            <Slide image={image3} text='Look like a king place, Explore!' className='rounded-lg'></Slide>
+          </SwiperSlide>
+
+          <SwiperSlide>
+            <Slide image={image4} text=' Very beautiful hotel and eco-friendly!' className='rounded-lg'></Slide>
+          </SwiperSlide>
+
+        </Swiper>
+      </div>
     </>
   );
 }

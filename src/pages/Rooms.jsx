@@ -21,7 +21,7 @@ const Rooms = () => {
              <Helmet>
                 <title>Modern-Hotel | Rooms</title>
             </Helmet>
-            <div className='justify-center items-center flex mt-4'>
+            <div className='justify-center items-center flex mt-28 lg:mt-4'>
             <select className='px-2 py-1 ml-2 border-[1px] border-amber-400 rounded-lg' 
             name="pricePerNight"
             id="pricePerNight"

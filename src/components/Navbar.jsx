@@ -3,13 +3,14 @@ import { useContext, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { AuthContext } from '../provider/AuthProvider';
 import toast, { Toaster } from 'react-hot-toast';
+import logo from '../../public/check-in-desk.png'
 const Navbar = () => {
     const { user, logOut } = useContext(AuthContext);
     const [showName, setShowName] = useState(false);
 
     const links = <>
+
         <li className='font-manrope'><NavLink to='/' className={({ isActive }) => isActive ? 'border-[1px] border-pink-400 rounded-lg' : ""}>Home</NavLink></li>
-        <li className='font-manrope'><NavLink to='/register' className={({ isActive }) => isActive ? 'border-[1px] border-pink-400 rounded-lg' : ""}>Register</NavLink></li>
         <li className='font-manrope'><NavLink to='/rooms' className={({ isActive }) => isActive ? 'border-[1px] border-pink-400 rounded-lg' : ""}>Rooms</NavLink></li>
         <li className='font-manrope'><NavLink to='/myBooking' className={({ isActive }) => isActive ? 'border-[1px] border-pink-400 rounded-lg' : ""}>My Bookings</NavLink></li>
     </>
@@ -37,7 +38,7 @@ const Navbar = () => {
                             {links}
                         </ul>
                     </div>
-                    <Link to='/' className="btn btn-ghost text-xl hidden lg:block">ElysianStays</Link>
+                    <Link to='/' className="btn btn-ghost text-xl hidden lg:block font-extrabold text-orange-400">HOLIDAY<span className='font-extrabold text-sky-400'>HIVE</span></Link>
                 </div>
                 <div className="navbar-center hidden lg:flex">
                     <ul className="menu menu-horizontal px-1">
