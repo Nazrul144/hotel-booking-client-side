@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import FeaturedRoomCard from './FeaturedRoomCard';
 import { Typewriter } from 'react-simple-typewriter'
+import Marquee from "react-fast-marquee";
+
+
 const FeaturedRooms = () => {
-
-
 
     const [featuredRooms, setFeaturedRooms] = useState([])
     useEffect(() => {
@@ -21,6 +22,8 @@ const FeaturedRooms = () => {
     }
 
     return (
+
+        
         <div className=' text-center'>
         
         <div className='mx-auto'>
@@ -39,6 +42,13 @@ const FeaturedRooms = () => {
                 </span>
             </h1>
         </div>
+
+        <div className=' '>
+        <Marquee className='text-4xl text-blue-400 font-bold z-10' pauseOnHover={true}>
+          Welcome to Holiday Hive World. We are super excited to congratulate you!
+        </Marquee>
+      </div>
+
 
         <div className='w-1/2 mx-auto'>
             <p className='mt-4'>Our featured rooms offer luxury, comfort, and convenience, ensuring an unforgettable stay with modern amenities and tasteful decor.</p>

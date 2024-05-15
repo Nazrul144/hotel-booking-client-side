@@ -115,7 +115,7 @@ const Login = () => {
                 </div>
 
                 <p className="text-xl text-center sm:px-6 dark:text-gray-600">Don't have an account?
-                    <Link to='/register' rel="noopener noreferrer" href="#" className="underline dark:text-gray-800 font-bold text-blue-600">Login</Link>
+                    <Link to='/register' rel="noopener noreferrer" href="#" className="underline dark:text-gray-800 font-bold text-blue-600">Register</Link>
                 </p>
             </div>
             <Toaster position="top-right"

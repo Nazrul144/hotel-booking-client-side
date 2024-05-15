@@ -9,7 +9,6 @@ import image4 from '../../assets/banner/image4.jpg'
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
-import Marquee from "react-fast-marquee";
 
 // import required modules
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
@@ -18,14 +17,7 @@ import Slide from './Slide';
 export default function Banner() {
   return (
     <>
-
-      <div>
-        <Marquee className='text-4xl text-blue-400 font-bold' pauseOnHover={true} gradientColor={string}>
-          Welcome to Holiday Hive World. We are super excited to congratulate you!
-        </Marquee>
-      </div>
-
-      <div className='container px-6 py-10 mx-auto'>
+      <div className='container  py-8 mx-auto mt-20 lg:mt-4 '>
         <Swiper
           spaceBetween={30}
           centeredSlides={true}

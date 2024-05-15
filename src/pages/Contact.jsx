@@ -1,5 +1,6 @@
 
 import { Fade } from 'react-awesome-reveal';
+import { Link } from 'react-router-dom';
 import { Typewriter } from 'react-simple-typewriter'
 
 const Contact = () => {
@@ -30,7 +31,7 @@ const Contact = () => {
       </h1>
       </div>
 
-      <section className="contact-us ml-8">
+      <section className="contact-us ml-8 mr-8">
         <div className="contact-info">
         <Fade cascade damping={0.1}>
         <p className='animate__animated animate__backInDown bg-[#49699e] text-white p-8 text-justify rounded-sm '>
@@ -85,7 +86,10 @@ const Contact = () => {
        </Fade>
         
           </div>
-            
+          <div className='flex justify-center'>
+          <button className='font-bold font-manrope text-2xl bg-slate-700 p-2 rounded-lg text-white btn btn-primary mt-8 mb-8'><Link to='/visitor'>Visitors Reviews</Link></button>
+
+          </div>
           <p>Thank you for choosing us. We look forward to serving you!</p>
         </div>
       </section>

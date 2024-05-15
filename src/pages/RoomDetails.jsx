@@ -3,20 +3,34 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from 'axios';
 import { Navigate } from 'react-router-dom'
-import { Link, useLoaderData } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 import { AuthContext } from "../provider/AuthProvider";
 import Swal from 'sweetalert2'
+import moment from "moment";
+import { useLocation } from 'react-router-dom'
+
+
+
 const RoomDetails = () => {
+
+
   const [startDate, setStartDate] = useState(new Date());
+
   const room = useLoaderData();
   const { image, pricePerNight, title, specialOffers, _id, roomSize, availability, description } = room || {};
-
   const { user, loading } = useContext(AuthContext)
-
   const [reviews, setReviews] = useState([])
 
+  // const [date, setDate] = useState();
+  // const [rooms, SetRooms] = useState([]);
+  // const [dataChange, setDataChange] = useState();
+  // const todayDate = moment().format("YYYY-MM-DD");
+  // const [alreadyBooked, setAlreadyBooked] = useState();
+  // const location = useLocation()
+
+
   useEffect(() => {
-    // Fetch reviews for the specific house
+    // Fetch reviews for the specific room
     fetch(`${import.meta.env.VITE_API_URL}/reviews/${_id}`)
       .then(res => res.json())
       .then(data => {
@@ -27,8 +41,39 @@ const RoomDetails = () => {
       });
   }, [_id]);
 
+  // //Fetching room data:
+  // useEffect(() => {
+  //   fetch("http://localhost:5000/rooms")
+  //     .then((res) => res.json())
+  //     .then((data) => setData(data));
+  //   const findData = data?.find((data) => data._id == id);
+  //   SetRooms(findData);
+  // }, []);
 
-  console.log(_id);
+  // // Fetchng booking data:
+  // const [booked, setBooked] = useState([]);
+  // const url = `http://localhost:5000/booked?room_id=${_id}`;
+
+  // useEffect(() => {
+  //   const findBooked = booked.find((data) => data.date === dataChange);
+  //   setAlreadyBooked(findBooked);
+  // }, [dataChange, booked]);
+
+
+
+  useEffect(() => {
+    const url = `import.meta.env.VITE_API_URL/booked?room_id=${_id}`;
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => setBooked(data));
+  }, [_id]);
+
+
+
+
+  //setToday date
+  // const todayDate = moment().format("YYYY-MM-DD");
+
 
   // Function to handle booking
   const handleBookNow = async () => {
@@ -41,12 +86,13 @@ const RoomDetails = () => {
       roomId, title, date, email, status
     }
 
+
     try {
       if (user) {
 
         Swal.fire({
           title: "Are you sure?",
-          html: `<b>The price for ${title} is $${pricePerNight} per night.</b> Booking Date: <b>${new Date(date).toLocaleDateString()}</b>.`,
+          html: `<b>The price for ${title} is $${pricePerNight} per night.</b> Booking Date:${new Date(date).toLocaleDateString()}</b>.`,
           icon: "warning",
           showCancelButton: true,
           confirmButtonColor: "#3085d6",
@@ -64,7 +110,8 @@ const RoomDetails = () => {
                 text: "You have booked the room!.",
                 icon: "success"
               });
-              location.reload()
+
+              return <Navigate to='/myBooking' state={location.pathname} replace={true}></Navigate>
             }
           }
         });
@@ -79,7 +126,6 @@ const RoomDetails = () => {
 
   return (
     <div>
-      <h1>This is room details page</h1>
       <section className="dark:bg-gray-100 dark:text-gray-800 relative">
         <div className="container flex flex-col justify-center p-6 mx-auto sm:py-12 lg:py-24 lg:flex-row lg:justify-between">
           {/* Image Container */}
@@ -89,11 +135,7 @@ const RoomDetails = () => {
             <div className="absolute inset-0 flex flex-col justify-center items-center text-white p-4 text-center bg-black bg-opacity-50">
               <h2 className="text-xl font-semibold"></h2>
               {/* Display the rating for each review */}
-              <h1 className="font-bold">Rating:
-                {reviews.map((review, index) => (
-                  <span key={index}> {review.rating}</span>
-                ))}
-              </h1>
+
             </div>
           </div>
           {/* Room Details */}
@@ -104,12 +146,36 @@ const RoomDetails = () => {
             <li className="mt-4 text-lg font-bold"> <span className="text-sky-400">Availability:</span> {availability}</li>
             <li className="mt-4 text-lg font-bold"> <span className="text-orange-400" >Special Offer:</span> {specialOffers}</li>
             <li className="mt-4 text-justify "> <span className="font-bold" >Description:</span> {description}</li>
+            <div>
+
+              <div>
+                <h1 className="font-bold mt-4">Total Reviews: {reviews.length}</h1>
+                <h1 className="font-bold text-red-500">Rating:</h1>
+                <div className="flex">
+                  {reviews.map((review, index) => (
+                    <span key={index} className="mr-2 ">{review.rating || "No review available"}</span>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <h1 className="font-bold text-red-500">Comments:</h1>
+                <div className="flex">
+                  {reviews.map((review, index) => (
+                    <span key={index} className="mr-2 text">{review.comment || "No comment available"}</span>
+                  ))}
+                </div>
+              </div>
+
+
+
+
+            </div>
             <div className='flex flex-col gap-1 '>
-              <li className='text-gray-700 text-lg font-bold mt-4'>Pick Your Ideal Date</li>
+              <p className='text-gray-700 text-lg font-bold mt-4'>Pick Your Ideal Date:</p>
               <DatePicker className="border p-2 rounded-lg" selected={startDate} onChange={(date) => setStartDate(date)} />
             </div>
             <div className=" mt-4 flex flex-col space-y-4 sm:items-center sm:justify-center sm:flex-row sm:space-y-0 sm:space-x-4 lg:justify-start">
-              <Link to='/myBooking' onClick={handleBookNow} rel="noopener noreferrer" href="#" className="px-8 py-3 text-lg font-semibold rounded bg-violet-400 dark:bg-violet-600 text-gray-900 dark:text-gray-50 hover:bg-[tomato] duration-1000 ease-in-out hover:text-black border-none">Book Now</Link>
+              <button onClick={handleBookNow} rel="noopener noreferrer" href="#" className="px-8 py-3 text-lg font-semibold rounded bg-violet-400 dark:bg-violet-600 text-gray-900 dark:text-gray-50 hover:bg-[tomato] duration-1000 ease-in-out hover:text-black border-none">Book Now</button>
             </div>
           </div>
         </div>

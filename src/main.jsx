@@ -19,6 +19,8 @@ import RoomDetails from './pages/RoomDetails.jsx';
 import PrivateRoute from './pages/PrivateRoute/PrivateRoute.jsx'
 import Contact from './pages/Contact.jsx';
 import About from './pages/About.jsx';
+import UpdateDate from './pages/UpdateDate.jsx';
+import VisitorReview from './pages/VisitorReview.jsx';
 
 
 const router = createBrowserRouter([
@@ -59,6 +61,14 @@ const router = createBrowserRouter([
       {
         path:'/contact',
         element: <Contact></Contact>
+      }, 
+      {
+        path:'/update',
+        element: <UpdateDate></UpdateDate>
+      },
+      {
+        path:'/visitor',
+        element: <VisitorReview></VisitorReview>
       }
     ]
   },
