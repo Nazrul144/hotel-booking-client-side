@@ -6,7 +6,7 @@ const VisitorReview = () => {
     const [visitorReviews, setVisitorReviews] = useState([])
 
     useEffect(() => {
-        fetch('http://localhost:5000/visitors')
+        fetch(`${import.meta.env.VITE_API_URL}/visitors`)
             .then(res => res.json())
             .then(data => {
                 setVisitorReviews(data);

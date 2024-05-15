@@ -20,6 +20,8 @@ const RoomDetails = () => {
   const { image, pricePerNight, title, specialOffers, _id, roomSize, availability, description } = room || {};
   const { user, loading } = useContext(AuthContext)
   const [reviews, setReviews] = useState([])
+  const [averageRating, setAverageRating] = useState(null); // Add state for average rating
+
 
   // const [date, setDate] = useState();
   // const [rooms, SetRooms] = useState([]);
@@ -76,7 +78,7 @@ const RoomDetails = () => {
 
 
   // Function to handle booking
-  const handleBookNow = async () => {
+  const handleBookNow =  () => {
     const roomId = _id;
     //   const title = title;
     const date = startDate;
@@ -85,6 +87,25 @@ const RoomDetails = () => {
     const bookData = {
       roomId, title, date, email, status
     }
+
+
+  
+ fetch(`${import.meta.env.VITE_API_URL}/rooms/is-booked/${roomId}?bookingDate=${date}`)
+  .then(res => {
+      if (!res.ok) {
+          throw new Error('Network response was not ok');
+      }
+      return res.json();
+  })
+  .then(data => {
+      console.log(data);
+  })
+  .catch(error => {
+      console.error('There was a problem with the fetch operation:', error);
+      // Handle errors here
+  });
+
+  //I could not complete this part. It just returns promise. I find this but could not get the solution due to the time and electricity issue. 
 
 
     try {
@@ -124,8 +145,30 @@ const RoomDetails = () => {
 
   };
 
+  
+  useEffect(() => {
+    // Fetch reviews for the specific room
+    fetch(`${import.meta.env.VITE_API_URL}/reviews/${_id}`)
+      .then(res => res.json())
+      .then(data => {
+        setReviews(data);
+        // Calculate average rating
+        const ratings = data.map(review => parseFloat(review.rating)); 
+        const totalRatings = ratings.length;
+        const sumOfRatings = ratings.reduce((acc, rating) => acc + rating, 0);
+        const average = totalRatings > 0 ? sumOfRatings / totalRatings : 0;
+        setAverageRating(average);
+      })
+      .catch(error => {
+        console.error("Error fetching reviews:", error);
+      });
+  }, [_id]);
+  
+
   return (
     <div>
+      <div>
+      </div>
       <section className="dark:bg-gray-100 dark:text-gray-800 relative">
         <div className="container flex flex-col justify-center p-6 mx-auto sm:py-12 lg:py-24 lg:flex-row lg:justify-between">
           {/* Image Container */}
@@ -149,13 +192,8 @@ const RoomDetails = () => {
             <div>
 
               <div>
-                <h1 className="font-bold mt-4">Total Reviews: {reviews.length}</h1>
-                <h1 className="font-bold text-red-500">Rating:</h1>
-                <div className="flex">
-                  {reviews.map((review, index) => (
-                    <span key={index} className="mr-2 ">{review.rating || "No review available"}</span>
-                  ))}
-                </div>
+                <h1 className="font-bold mt-4">Total Reviewers: {reviews.length}</h1>
+                <h1 className="font-bold text-red-500">Average Rating: {averageRating !== null ? averageRating.toFixed(1) : "N/A"}</h1>
               </div>
               <div>
                 <h1 className="font-bold text-red-500">Comments:</h1>

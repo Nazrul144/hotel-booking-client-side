@@ -2,21 +2,28 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { AuthContext } from '../provider/AuthProvider';
 import axios from 'axios';
-import { MdModeEditOutline } from "react-icons/md";
 import { MdCancel } from "react-icons/md";
 import { MdFeedback } from "react-icons/md";
 import Swal from 'sweetalert2'
 import DatePicker from "react-datepicker";
-import Modal from 'react-modal';
-import { Link } from 'react-router-dom';
+import moment from "moment";
 
 const MyBooking = () => {
   const { user } = useContext(AuthContext)
   const [bookData, setBookData] = useState([])
+
+  //State to manage time:
   const [startDate, setStartDate] = useState(new Date());
-  const [modalIsOpen, setModalIsOpen] = useState(false); // State to manage modal visibility
- 
-  console.log(bookData);
+  //setToday date
+  const todayDate = moment().format("YYYY-MM-DD");
+
+
+
+  console.log(startDate);
+
+
+  //data fetching:
+
   useEffect(() => {
     getBookData()
   }, [user])
@@ -27,7 +34,6 @@ const MyBooking = () => {
   }
 
   const handleDelete = async (id) => {
-
     Swal.fire({
       title: "Do you want to cancel the booking?",
       icon: "warning",
@@ -55,9 +61,42 @@ const MyBooking = () => {
         location.reload()
       }
     });
-
-
   } //end block
+
+
+
+  // Handle update:
+  const handleUpdate = (e) => {
+    e.preventDefault()
+    const date = startDate
+    console.log(date);
+
+    //  fetch(`${import.meta.env.VITE_API_URL}/bookData/${id}`, {
+    //   method: "PATCH",
+    //   headers: {
+    //     "content-type": "application/json"
+    //   },
+    //   body: JSON.stringify({ status: "confirm" })
+
+    // })
+    //   .then(res => res.json())
+    //   .then(data => {
+    //     console.log(data);
+    //     if (data.modifiedCount > 0) {
+    //      //Updating....
+    //       const remaining = bookData.filter( date => date._id !== id);
+    //       const updated = bookData.find(data => data._id === id);
+    //       updated.status = "confirm"
+    //       const newDate = [updated, ...remaining];
+    //       setBookData(newDate)
+
+    // //     }
+    //   })
+
+  }
+
+
+
 
 
   //Handling feedback:
@@ -89,7 +128,7 @@ const MyBooking = () => {
       confirmButtonText: "Submit",
       cancelButtonText: "Cancel",
       focusConfirm: false,
-      
+
 
       preConfirm: async () => {
         // Handle form submission here
@@ -135,7 +174,7 @@ const MyBooking = () => {
       <div className='myBooking mt-20 lg:mt-8'>
         <section className='container px-4 mx-auto pt-12'>
           <div className='flex items-center gap-x-3'>
-            <h2 className='text-lg font-medium text-sky-400'>My Booking Status:</h2>
+            <h2 className='text-lg font-medium text-red-500'>My Booking Status:</h2>
 
             <span className='px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full '>
               {bookData.length} Booked
@@ -203,19 +242,26 @@ const MyBooking = () => {
                           </td>
                           <td className='px-4 py-4 text-sm whitespace-nowrap'>
                             <div className='flex items-center gap-x-2'>
-                              <div className='inline-flex items-center px-3 py-1 rounded-full gap-x-2'>
-                                <Link to='/update' onClick={() => handleUpdate(singleBookData._id)}><MdModeEditOutline className='font-extrabold text-xl ml-4' /></Link>
-                                {/* Modal for updating date */}
-                                <Modal
-                                  isOpen={modalIsOpen}
-                                  onRequestClose={() => setModalIsOpen(false)}
-                                  contentLabel="Update Date Modal"
-                                >
-                                  <h2>Select New Date</h2>
-                                  <DatePicker className="border p-2 rounded-lg" selected={startDate}  />
-                                  <button onClick={() => setModalIsOpen(false)}>Close</button>
-                                </Modal>
+                              {/* Open the modal using document.getElementById('ID').showModal() method */}
+                              <div className='flex items-center gap-x-2'>
+                                {/* Open the modal using document.getElementById('ID').showModal() method */}
+                                <button className="btn" onClick={() => document.getElementById('my_modal_1').showModal()}>Update Date</button>
+                                <dialog id="my_modal_1" className="modal">
+                                  <div className="modal-box">
+                                    <h3 className="font-bold text-lg">Hello!</h3>
+                                    <DatePicker className="border p-2 rounded-lg " selected={startDate} onChange={(date) => setStartDate(date)} />
+                                    <div className="modal-action">
+                                      <form onSubmit={handleUpdate} method="dialog">
+                                        {/* if there is a button in form, it will close the modal */}
+                                        <button type="submit" className="btn">Ok</button>
+                                      </form>
+                                      {/* Close button to close the modal without submitting */}
+                                      <button className="btn" onClick={() => document.getElementById('my_modal_1').close()}>Cancel</button>
+                                    </div>
+                                  </div>
+                                </dialog>
                               </div>
+
                             </div>
                           </td>
                           <td className='px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap'>

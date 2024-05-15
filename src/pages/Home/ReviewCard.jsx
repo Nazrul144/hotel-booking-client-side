@@ -1,8 +1,8 @@
 import moment from 'moment';
-import React from 'react';
-
-const ReviewCard = ({data}) => {
+import React, { useEffect, useState } from 'react';
+const ReviewCard = ({data, sortedReview}) => {
     const time = moment(data?.time, "YYYYMMDD").fromNow();
+
 
     return (
         <div>
@@ -15,8 +15,7 @@ const ReviewCard = ({data}) => {
                   <h4 className="mb-4 text-2xl text-center font-semibold"><span className='text-sky-400'>Special Offer:</span>{data?.specialOffers} </h4>
                     <div className='flex justify-between items-center'>
                         <p> <span className='text-sky-400 font-semibold'>Room Name:</span> {data?.title}</p>
-                        <p><span className='text-sky-400 font-semibold'>Price: </span>{data?.pricePerNight} $</p>
-
+                        <p><span className='text-sky-400 font-semibold'>Price: </span>{data?.pricePerNight} </p>
                     </div>
                   <hr />
                   <p className="mt-4">

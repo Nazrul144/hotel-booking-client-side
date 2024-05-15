@@ -69,7 +69,8 @@ const router = createBrowserRouter([
       {
         path:'/visitor',
         element: <VisitorReview></VisitorReview>
-      }
+      },
+      
     ]
   },
 ]);
